@@ -12,4 +12,5 @@ public class Test {
 		System.out.println(PPT.jugar("Jugador 1 elije Piedra","Jugador 2 elije Tijera" ));
 		System.out.println(PPT.jugar("Jugador 1 elije Piedra","Jugador 2 elije Papel" ));
 	}
+
 }

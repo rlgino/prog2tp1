@@ -3,7 +3,7 @@ package tp3_2017_c1;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PPT {
+public class PPTLS {
 
 	private static List<Elemento> elementos = new ArrayList<Elemento>();
 
