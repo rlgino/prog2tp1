@@ -1,47 +1,104 @@
 package tp1_2017_c1;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
 public class CashFlow {
-	List<Registro> registros = new ArrayList<Registro>();
-	int saldo;
+	private ArrayList<Registro> registros;
+	
+	private Integer saldo;	//saldo gral
 
-	public CashFlow() {
-		super();
-		saldo = 0;
-	}
+	private static Integer cantReg;
+	
+public CashFlow(){
+	saldo = 0;
+	cantReg = 0;
+	registros = new ArrayList<Registro>();
+}
 
-	public void agregarRegistro(Registro registro) {
-		registros.add(registro);
-		saldo += registro.getSaldo();
-	}
+public void agregarRegistro(Registro r){
+	
+	r.fecha = cantReg;
+	cantReg++;
+	
+	registros.add(r);	
+	
+	saldo = saldo + r.importe;
+	
+	// por construccion fechaReal viene vacio, por las dudas pregunto
+	if (saldo < 0 && r.fechaReal != null)
+		throw new RuntimeException("saldo negativo!: " + saldo);
+	
+}
 
-	public void forzarInvariante() {
-		if(saldo < 0) throw new RuntimeException();
+
+public void minimizarDistanciaAcumulada(){
+	//...
+}
+
+public void forzarInvariante(){
+	
+	Stack<Registro> regsAux = new Stack<Registro>();
 		
-		int saldoR = 0;
-		for(int x = 0; x < registros.size(); x++){
-			
-			if(saldoR + registros.get(x).getSaldo() < 0){
-				int y;
-				for(y = x+1 ; registros.get(y).getSaldo() < 0 ; y++){}
-				
-				final Registro registroN = registros.get(y);
-				registroN.setDistancia(y-x);
-				registros.get(x).setDistancia(y-x);
-				registros.set(y, registros.get(x));
-				registros.set(x, registroN);
-			}
-			saldoR += registros.get(x).getSaldo();
+	int i;
+	
+	Registro regAux;
+	
+	for (i=registros.size()-1; i > -1 ; i--){	// voy al revez para no romper el indice al borrar
+		if (registros.get(i).importe < 0) {
+
+			// guardo los negativos primero, para que luego esten al final
+			regsAux.push(registros.get(i));
+			registros.remove(i);
 		}
 	}
-	
-	@Override
-	public String toString(){
-		String cad = "";
-		for(final Registro registro : registros)
-			cad += registro.getSaldo() + " " + registro.getDistancia();
-		return cad;
+
+	for (i=registros.size()-1; i > -1 ; i--){	
+			// guardo el resto
+			regsAux.push(registros.get(i));
+			registros.remove(i);
 	}
+
+	//rearmo el saldo
+	saldo = 0;
+	i=0;
+	while (!regsAux.empty()){
+		//quedan los importes positivos primero
+		
+		regAux = regsAux.pop();
+		regAux.fechaReal = i; //asignamos la fecha real correcta
+				
+		registros.add(regAux);
+		
+		saldo = saldo + registros.get(i).importe;
+		
+		//se tiene que cumplir para todo i
+		if (saldo < 0) 
+			throw new RuntimeException("saldo negativo!: " + saldo);		
+		
+		i++;
+	}
+	
+
+	
+}
+
+public Integer saldo(){
+	return saldo;
+}
+
+@Override
+public String toString(){
+	String ret = "";
+	
+	for (Registro e: registros){
+		ret = ret + e + "; \n";
+	}
+	
+	ret = ret + " Saldo: " + saldo ;
+	
+	return ret;
+}
+
+
 }

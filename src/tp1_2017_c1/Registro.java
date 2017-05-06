@@ -1,27 +1,24 @@
 package tp1_2017_c1;
 
+
+
 public class Registro {
-	int saldo;
-	int distancia = 0;
 
-	public int getSaldo() {
-		return saldo;
-	}
+	Integer importe;
+	Integer fecha;
+	Integer fechaReal;
 
-	public void setSaldo(int saldo) {
-		this.saldo = saldo;
-	}
+public Registro( Integer importe){
+		
+		this.importe = importe;
+		// es importante que fechaReal sea null para el invariante
+}
 
-	public int getDistancia() {
-		return distancia;
-	}
+@Override
+public String toString(){
 
-	public void setDistancia(int distancia) {
-		this.distancia += distancia;
-	}
+	return "Fecha " + fecha +"; real:" + fechaReal + " imp:" + importe  ;
+}
 
-	public Registro(int saldo) {
-		super();
-		this.saldo = saldo;
-	}
+
 }

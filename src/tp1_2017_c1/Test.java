@@ -7,9 +7,9 @@ public class Test {
 		CashFlow c1 = new CashFlow();
 		
 	
-		c1.agregarRegistro(new Registro(500));
-		c1.agregarRegistro(new Registro(-700));
-		c1.agregarRegistro(new Registro(400));
+		c1.agregarRegistro(new Registro(100));
+		c1.agregarRegistro(new Registro(-100));
+		c1.agregarRegistro(new Registro(100));
 		c1.agregarRegistro(new Registro(-100));
 		
 
@@ -20,13 +20,13 @@ public class Test {
 		CashFlow c2 = new CashFlow(); // no cumplira el invariante
 		// para ningun orden posible
 		
-		c2.agregarRegistro(new Registro(-100));
+		c2.agregarRegistro(new Registro(100));
 		c2.agregarRegistro(new Registro(-100));
 		c2.agregarRegistro(new Registro(100));
-		c2.agregarRegistro(new Registro(101));
+		c2.agregarRegistro(new Registro(-101));
 		
-		c2.forzarInvariante();
-		System.out.println(c2);
+		//c2.forzarInvariante();
+		//System.out.println(c2);
 			
 				
 	}
