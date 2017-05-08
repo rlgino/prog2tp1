@@ -5,29 +5,34 @@ import java.util.List;
 
 public class Elemento {
 
-	public List<String> getLeGanaA() {
-		return leGanaA;
+	String name;
+	List<Elemento> parecido = new ArrayList<Elemento>();
+	
+	
+
+	public List<Elemento> getParecidos() {
+		return parecido;
 	}
 
-	String name;
-	List<String> leGanaA = new ArrayList<String>();
+	public void addParecido(Elemento parecido) {
+		this.parecido.add(parecido);
+	}
 
 	public Elemento(String elemento) {
 		name = elemento;
 	}
 
-	public Elemento() {	}
-
-	public void agregarLeGanaA(String elemento) {
-		leGanaA.add(elemento);
-	}
-
-	//Getters y setters
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Elemento agregarParecido(String nombre) {
+		Elemento elemento = new Elemento(nombre);
+		addParecido(elemento);
+		return elemento;
 	}
 }

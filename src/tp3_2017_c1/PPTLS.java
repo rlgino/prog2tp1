@@ -6,46 +6,29 @@ import java.util.List;
 public class PPTLS {
 
 	private static List<Elemento> elementos = new ArrayList<Elemento>();
+	private static List<Regla> reglas = new ArrayList<Regla>();
 
-	public static void agregarElemento(String elemento) {
-		Elemento nuevoElemento = new Elemento(elemento);
-		elementos.add(nuevoElemento);
+	public static Elemento agregarElemento(String nombre) {
+		Elemento elemento = new Elemento(nombre);
+		return elemento;
 	}
 
-	public static void agregarRegla(String leGanaA) {
-		Elemento seleccionado = extraerPrimerElemento(leGanaA);
-		leGanaA = leGanaA.replace(seleccionado.getName(), "");
-		seleccionado.agregarLeGanaA(extraerSegundoElemento(leGanaA));
+	public static void agregarRegla(Elemento elemento, Elemento leGanaA) {
+		Regla r = new Regla(elemento, leGanaA);
+		elementos.add(elemento);
+		reglas.add(r);
 	}
 
-	private static String extraerSegundoElemento(String leGanaA) {
-		for (Elemento e : elementos)
-			if (leGanaA.indexOf(e.getName()) > -1) {
-				leGanaA.replace(e.getName(), "");
-				return e.getName();
-			}
-		return "";
-	}
-
-	private static Elemento extraerPrimerElemento(String leGanaA) {
-		for (Elemento e : elementos)
-			if (leGanaA.indexOf(e.getName()) > -1 && leGanaA.indexOf(e.getName()) == 0) {
-				return e;
-			}
-		return new Elemento();
-	}
-
-	public static Integer jugar(String jug1, String jug2) {
-		for (Elemento e : elementos){
-			if(jug1.indexOf(e.getName()) == jug2.indexOf(e.getName())) return 0;
-			if (jug1.indexOf(e.getName()) > -1) {
-				for (String e1 : e.getLeGanaA()) {
-					if (jug2.indexOf(e1) > -1)
-						return 1;
-				}
-				return 2;
+	public static Integer jugar(Elemento jug1, Elemento jug2) {
+		
+		if(jug1.equals(jug2)) return 0;
+		
+		for(Regla r : reglas){
+			if(r.getElemento().equals(jug1) || r.getElemento().getParecidos().contains(jug1)){
+				if(r.buscarElemento(jug2))
+					return 1;
 			}
 		}
-		return 0;
+		return 2;
 	}
 }
