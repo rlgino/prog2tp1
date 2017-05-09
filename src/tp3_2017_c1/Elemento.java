@@ -31,4 +31,8 @@ public class Elemento {
 		parecidos.add(elemento);
 	}
 
+	public ArrayList<Elemento> getParecidos() {
+		return parecidos;
+	}
+
 }

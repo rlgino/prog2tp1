@@ -22,13 +22,29 @@ public class PPTLS {
 		Elemento elemTmp1 = getElemento(elemento1);
 		Elemento elemTmp2 = getElemento(elemento2);
 		elemTmp1.leGanaA(elemTmp2);
+		//Agrego que los elementos hijos del primer elemento le ganen al elemento nro 2
+		for(Elemento ele : elemTmp1.getParecidos()){
+			getElemento(ele.nombre).leGanaA(elemTmp2);
+			ele.leGanaA(elemTmp2);
+		}
+		//Agrego que el elemento 1 le gane a todos los hijos del segundo elemento
+		for(Elemento ele2 : elemTmp2.getParecidos()){
+			elemTmp1.leGanaA(ele2);
+		}
+		//Agrego que los hijos del primer elemento le ganen a los hijos del 2do elemento
+		for(Elemento ele : elemTmp1.getParecidos()){
+			for(Elemento ele2 : elemTmp2.getParecidos()){
+				getElemento(ele.nombre).leGanaA(elemTmp2);
+				ele.leGanaA(ele2);
+			}
+		}
 	}
 
 	// desicion dediseño, resuelvo la impedancia entre String y Elemento aca
 	private Elemento getElemento(String obj) {
 		Elemento tmp = null;
 		for (Elemento elemTmp1 : elementos) {
-			if (elemTmp1.nombre.equals(obj)) {
+			if (elemTmp1.nombre.equalsIgnoreCase(obj)) {
 				tmp = elemTmp1;
 			}
 		}
@@ -53,7 +69,7 @@ public class PPTLS {
 				return elemento1 + " > " + elemento2;
 		} else {
 			if (elemTmp2.existe(elemTmp1))// o2 > o1//ganao2
-				return elemento2 + " > " + elemento1;
+				return elemento1 + " < " + elemento2;
 			else
 				throw new RuntimeException("!(o1 > o2) and !(o2 > o1)");
 		}
@@ -63,6 +79,7 @@ public class PPTLS {
 		Elemento elemTemp = getElemento(padre);
 		Elemento elemHijo = new Elemento(hijo);
 		elemTemp.agregarParecido(elemHijo);
+		elementos.add(elemHijo);
 	}
 
 }
