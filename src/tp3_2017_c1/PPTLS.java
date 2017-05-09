@@ -24,7 +24,6 @@ public class PPTLS {
 		elemTmp1.leGanaA(elemTmp2);
 		//Agrego que los elementos hijos del primer elemento le ganen al elemento nro 2
 		for(Elemento ele : elemTmp1.getParecidos()){
-			getElemento(ele.nombre).leGanaA(elemTmp2);
 			ele.leGanaA(elemTmp2);
 		}
 		//Agrego que el elemento 1 le gane a todos los hijos del segundo elemento
@@ -34,7 +33,6 @@ public class PPTLS {
 		//Agrego que los hijos del primer elemento le ganen a los hijos del 2do elemento
 		for(Elemento ele : elemTmp1.getParecidos()){
 			for(Elemento ele2 : elemTmp2.getParecidos()){
-				getElemento(ele.nombre).leGanaA(elemTmp2);
 				ele.leGanaA(ele2);
 			}
 		}
