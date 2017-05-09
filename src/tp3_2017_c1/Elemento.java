@@ -1,38 +1,34 @@
 package tp3_2017_c1;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Elemento {
+	String nombre;
+	private ArrayList<Elemento> leGanaA;
+	private ArrayList<Elemento> parecidos;
 
-	String name;
-	List<Elemento> parecido = new ArrayList<Elemento>();
+	public Elemento(String nombre){
+		this.nombre= nombre;
+		leGanaA= new ArrayList<Elemento>();
+		parecidos = new ArrayList<Elemento>();
+	}
+
+	public void leGanaA(Elemento elem) {// se hace la comparacion a mano
+		if (!existe(elem))
+			leGanaA.add(elem);
+	}
+
+	public boolean existe(Elemento elem) {
+		boolean ret = false;
+		for (Elemento elem2 : leGanaA) {
+			if (elem2.nombre.equals(elem.nombre))
+				ret = true;
+		}
+		return ret;
+	}
 	
-	
-
-	public List<Elemento> getParecidos() {
-		return parecido;
+	public void agregarParecido(Elemento elemento){
+		parecidos.add(elemento);
 	}
 
-	public void addParecido(Elemento parecido) {
-		this.parecido.add(parecido);
-	}
-
-	public Elemento(String elemento) {
-		name = elemento;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Elemento agregarParecido(String nombre) {
-		Elemento elemento = new Elemento(nombre);
-		addParecido(elemento);
-		return elemento;
-	}
 }
